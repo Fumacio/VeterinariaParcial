@@ -1,21 +1,21 @@
 const handleSubmit = async (event) => {
     event.preventDefault();
     let email = document.getElementById("email").value;
-    let password = document.getElementById("pass").value;
-    let data = { email, password };
+    let contraseña = document.getElementById("pass").value;
+    let data = { email, contraseña };
 
     // enviar datos al backend
     try {
-        const response = await axios.post('http://localhost:' + process.env.PORT + '/login', data);
-        console.log(response.data);
+        const response = await axios.post('http://localhost:5000/api/login', data);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
+        window.location.href = 'index.html';
     } catch (error) {
         console.error(error);
+        alert('Error al iniciar sesión: ' + (error.response ? error.response.data.error : error.message));
     }
 };
 
 // me quede en el minuto 32:32
 
-
-e.preventDefault();
-
-document.getElementById("btn-iniciarsesion").addEventListener("click", handleSubmit);
+document.getElementById("form-principal").addEventListener("submit", handleSubmit);
