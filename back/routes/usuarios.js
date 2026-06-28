@@ -41,7 +41,7 @@ router.post('/usuarios', authMiddleware, (req, res) => {
 // GET /usuarios/:id - Obtener usuario por ID
 router.get('/usuarios/:id', authMiddleware, (req, res) => {
     const userId = req.params.id
-    const query = 'SELECT id_usuario, email, nombre FROM usuarios WHERE id = ?';
+    const query = 'SELECT id_usuario, email, nombre FROM usuarios WHERE id_usuario = ?';
     connection.query(query, [userId], (err, results) => {
         if (err) {
             console.error(err)
@@ -76,7 +76,7 @@ router.post('/login', (req, res) => {
         }
 
         const token = jwt.sign(
-            { id: user.id, email: user.email }, 
+            { id: user.id_usuario, email: user.email }, 
             process.env.JWT_SECRET || 'secreto', 
             { expiresIn: '24h' }
         );
@@ -84,7 +84,7 @@ router.post('/login', (req, res) => {
         res.json({ 
             message: 'Inicio de sesion exitoso', 
             token, 
-            usuario: { id: user.id, nombre: user.nombre, email: user.email } 
+            usuario: { id: user.id_usuario, nombre: user.nombre, email: user.email } 
         });
     });
 });
