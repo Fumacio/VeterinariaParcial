@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veterinaria TucuPet</title>
-    <link rel="stylesheet" href="./login.css"> <!-- esta puesto el de login, ya esta creado el de index solo q me dio pajita -->
+    <link rel="stylesheet" href="./login.css">
+    <!-- esta puesto el de login, ya esta creado el de index solo q me dio pajita -->
 
 
     <script src="https://cdn.jsdelivr.net/npm/axios@1.18.0/dist/axios.min.js"></script>
@@ -31,14 +32,22 @@
 
         <a id="btn-login" href="login.html">Iniciar sesion</a>
         <a id="btn-register" href="register.html">Registrarse</a>
-        <a id="btn-contacto" href="contacto.html">Contacto</a>
-        
+        <a id="btn-contacto" href="#contacto">Contacto</a>
+        <a id="btn-admin" href="admin.html">Admin</a>
+
 
     </header>
     <main>
         <section>
             <h2>Productos</h2>
             <div id="productos-container" style="display: flex; flex-wrap: wrap; gap: 20px;"></div>
+        </section>
+
+        <section id="contacto">
+            <h2>Contacto</h2>
+            <p>Consultanos por WhatsApp o acercate a nuestros locales.</p>
+            <p>Teléfono: 381 593 0288</p>
+            <p>Email: tucupet@hotmail.com</p>
         </section>
     </main>
     <footer>
@@ -62,10 +71,17 @@
 
     <script>
         const btnLogout = document.getElementById('btn-logout');
+        const btnAdmin = document.getElementById('btn-admin');
         const token = localStorage.getItem('token');
+        const usuario = JSON.parse(localStorage.getItem('usuario')) || null;
 
         if (!token) {
             btnLogout.style.display = 'none';
+            btnAdmin.style.display = 'none';
+        }
+
+        if (!usuario || usuario.rol !== 'Administrador') {
+            btnAdmin.style.display = 'none';
         }
 
         btnLogout.addEventListener('click', () => {

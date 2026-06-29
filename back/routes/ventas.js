@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const { connection } = require('../config/database');
+const authMiddleware = require('../middleware/auth');
+const adminMiddleware = require('../middleware/admin');
 
 router.post('/ventas', (req, res) => {
     const { productos } = req.body
@@ -103,14 +105,54 @@ router.post('/ventas', (req, res) => {
                 });
             });
         });
-    })
+    });
 
+// ver cada venta
+router.get('/ventas', authMiddleware, adminMiddleware, (req, res) => {
+    const query = 'SELECT id_venta, fecha, total FROM ventas ORDER BY fecha DESC';
 
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Error al obtener ventas' });
+        }
 
+        res.json(results);
+    });
+});
 
+// detalle de cada venta
+router.get('/ventas/:id', authMiddleware, adminMiddleware, (req, res) => {
+    const ventaId = req.params.id;
 
+    const query = `
+        SELECT 
+            ventas.id_venta,
+            ventas.fecha,
+            ventas.total,
+            detalle_venta.id_detalle,
+            detalle_venta.id_producto,
+            productos.nombre AS producto,
+            detalle_venta.cantidad,
+            detalle_venta.precio_unitario,
+            detalle_venta.subtotal
+        FROM ventas
+        JOIN detalle_venta ON ventas.id_venta = detalle_venta.id_venta
+        JOIN productos ON detalle_venta.id_producto = productos.id_producto
+        WHERE ventas.id_venta = ?
+    `;
 
+    connection.query(query, [ventaId], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Error al obtener detalle de venta' });
+        }
 
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Venta no encontrada' });
+        }
 
-
-    module.exports = router;
+        res.json(results);
+    });
+});
+module.exports = router;

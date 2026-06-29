@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - TucuPet</title>
+    <link rel="stylesheet" href="./admin.css">
+</head>
+
+<body>
+    <header>
+        <h1>Panel administrador</h1>
+        <nav>
+            <button type="button" onclick="mostrarSeccion('productos')">Productos</button>
+            <button type="button" onclick="mostrarSeccion('ventas')">Ventas</button>
+            <a href="index.html">Volver a la tienda</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="seccion-productos">
+            <h2 id="titulo-formulario">Crear producto</h2>
+
+            <form id="form-producto">
+                <input type="hidden" id="id_producto">
+
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" required>
+
+                <label for="descripcion">Descripcion</label>
+                <textarea id="descripcion"></textarea>
+
+                <label for="precio">Precio</label>
+                <input type="number" id="precio" step="0.01" required>
+
+                <label for="stock">Stock</label>
+                <input type="number" id="stock" required>
+
+                <label for="imagen">Imagen</label>
+                <input type="text" id="imagen" placeholder="producto.jpg">
+
+                <label for="fecha_vencimiento">Fecha vencimiento</label>
+                <input type="date" id="fecha_vencimiento">
+
+                <label for="id_categoria">ID categoria</label>
+                <input type="number" id="id_categoria" required>
+
+                <label for="id_marca">ID marca</label>
+                <input type="number" id="id_marca" required>
+
+                <label for="id_tipo">ID tipo mascota</label>
+                <input type="number" id="id_tipo" required>
+
+                <button type="submit">Guardar producto</button>
+                <button type="button" id="btn-cancelar">Cancelar edicion</button>
+            </form>
+
+            <h2>Productos cargados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Categoria</th>
+                        <th>Marca</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-productos"></tbody>
+            </table>
+        </section>
+
+        <section id="seccion-ventas" hidden>
+            <h2>Ventas realizadas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-ventas"></tbody>
+            </table>
+
+            <h2>Detalle de venta</h2>
+            <div id="detalle-venta">
+                <p>Selecciona una venta para ver el detalle.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="./admin.js"></script>
+</body>
+
+</html>
