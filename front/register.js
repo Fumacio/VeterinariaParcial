@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Registro exitoso:', response.data);
                 alert('¡Registro exitoso! Redirigiendo a login...');
                 
-                // Redirigir a login después de 1.5 segundos
+                // Redirigir a login despues de 2 segundos
                 setTimeout(() => {
                     window.location.href = 'login.html';
-                }, 1500);
+                }, 2000);
                 
             } catch (error) {
                 console.error('Error en registro:', error);

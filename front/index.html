@@ -5,14 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veterinaria TucuPet</title>
-    <link rel="stylesheet" href="./login.css">
+    <link rel="stylesheet" href="./login.css"> <!-- esta puesto el de login, ya esta creado el de index solo q me dio pajita -->
 
-    <script>
-        const token = localStorage.getItem('token');
-        if (!token) {
-            window.location.href = 'login.html';
-        }
-    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/axios@1.18.0/dist/axios.min.js"></script>
 </head>
 
@@ -20,6 +15,8 @@
     <header>
         <h1>Veterinaria TucuPet</h1>
         <h2>Tienda online para Mascotas</h2>
+        <!-- esto del style del button iria en el css 💀 jajaja me acorde como poner emojis
+        cuando leas esto transferime 1 peso a mercado pago porfavor tengo que comer !-->
         <button id="btn-logout"
             style="position: absolute; top: 10px; right: 10px; padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">Cerrar
             sesión</button>
@@ -28,7 +25,14 @@
             <h2>Carrito</h2>
             <div id="carrito-container"></div>
             <p id="total-carrito"></p>
+            <button onclick="vaciarCarrito()">Vaciar carrito</button>
+            <button onclick="finalizarCompra()">Finalizar compra</button>
         </section>
+
+        <a id="btn-login" href="login.html">Iniciar sesion</a>
+        <a id="btn-register" href="register.html">Registrarse</a>
+        <a id="btn-contacto" href="contacto.html">Contacto</a>
+        
 
     </header>
     <main>
@@ -57,7 +61,14 @@
     </footer>
 
     <script>
-        document.getElementById('btn-logout').addEventListener('click', () => {
+        const btnLogout = document.getElementById('btn-logout');
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            btnLogout.style.display = 'none';
+        }
+
+        btnLogout.addEventListener('click', () => {
             localStorage.removeItem('token');
             localStorage.removeItem('usuario');
             window.location.href = 'login.html';

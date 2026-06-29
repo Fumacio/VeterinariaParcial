@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const usuarios = require('./routes/usuarios');
 const productos = require('./routes/productos');
+const ventas = require('./routes/ventas')
 
 const { connection } = require('./config/database');
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use ('/api', usuarios);
 app.use ('/api', productos);
+app.use ('/api', ventas);
 
 app.get('/api', (req, res) => {
     res.send({ message: 'Bienvenido a la API de la veterinaria tucupet' });
